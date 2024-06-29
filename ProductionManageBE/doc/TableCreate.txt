@@ -1,0 +1,181 @@
+
+CREATE DATABASE IF NOT EXISTS ADM_ProductionManage;
+
+USE ADM_ProductionManage;
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `cust_code` VARCHAR(50) DEFAULT NULL,
+    `cust_name` VARCHAR(128) DEFAULT NULL,
+    `cust_company` VARCHAR(128) DEFAULT NULL,
+    `cust_avatar` VARCHAR(250) DEFAULT NULL,
+    `cust_add` VARCHAR(128) DEFAULT NULL,
+    `payment_term` VARCHAR(50) DEFAULT NULL,
+    `email_address` VARCHAR(50) DEFAULT NULL,
+    `fax_no` VARCHAR(50) DEFAULT NULL,
+    `tel_no` VARCHAR(50) DEFAULT NULL,
+    `mobile_no` VARCHAR(50) NOT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `prod_code` VARCHAR(20) DEFAULT NULL,
+    `prod_fullname` VARCHAR(255) DEFAULT NULL,
+    `hash_code` VARCHAR(55) DEFAULT NULL,
+    `ingredient` VARCHAR(20) DEFAULT NULL,
+    `exp` DECIMAL(18, 2) DEFAULT NULL,
+    `market` VARCHAR(10) DEFAULT NULL,
+    `prod_name` VARCHAR(128) DEFAULT NULL,
+    `label_path` VARCHAR(255) DEFAULT NULL,
+    `barcode` VARCHAR(20) DEFAULT NULL,
+    `delay_m4` VARCHAR(20) DEFAULT NULL,
+    `delay_m5` VARCHAR(20) DEFAULT NULL,
+    `pack_size` DECIMAL(18, 2) DEFAULT NULL,
+    `loose_uom` VARCHAR(10) DEFAULT NULL,
+    `whole_uom` VARCHAR(50) DEFAULT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `prod_shift_data`;
+CREATE TABLE `prod_shift_data` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `work_order_no` VARCHAR(50) DEFAULT NULL,
+    `prod_code` VARCHAR(50) DEFAULT NULL,
+    `lot_no` VARCHAR(50) DEFAULT NULL,
+    `production_date` DATETIME DEFAULT NULL,
+    `expiry_date` DATETIME DEFAULT NULL,
+    `user_name` VARCHAR(50) DEFAULT NULL,
+    `shift_no` VARCHAR(10) DEFAULT NULL,
+    `cust_code` VARCHAR(50) DEFAULT NULL,
+    `device_code` VARCHAR(50) DEFAULT NULL,
+    `qty_tare_weigh` DECIMAL(18, 2) DEFAULT NULL,
+    `qty_order_weigh` DECIMAL(18, 2),
+    `loose_uom` VARCHAR(10) DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `weigh_session`;
+CREATE TABLE `weigh_session` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `session_code` VARCHAR(50),
+    `start_time` DATETIME,
+    `end_time` DATETIME DEFAULT NULL,
+    `cust_id` INT,
+    `cust_name` VARCHAR(128),
+    `cust_address` VARCHAR(128),
+    `boat_id` VARCHAR(50),
+    `so_number` VARCHAR(50),
+    `qty_counted` INT,
+    `qty_weighed` DECIMAL(18, 2),
+    `qty_tare_weigh` DECIMAL(18, 2),
+    `qty_good_weigh` DECIMAL(18, 2),
+    `qty_order_weigh` DECIMAL(18, 2),
+    `gap` DECIMAL(18, 2),
+    `document_no` VARCHAR(50),
+    `shift_data_id` INT NULL,
+    `user_id` INT NULL,
+    `device_code` VARCHAR(50) DEFAULT NULL,
+    `status_code` VARCHAR(1) DEFAULT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `weigh_session_d`;
+CREATE TABLE `weigh_session_d` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `session_code` VARCHAR(50),
+    `current_weigh` DECIMAL(18, 2),
+    `barcode` VARCHAR(20) DEFAULT NULL,
+    `prod_code` VARCHAR(50) DEFAULT NULL,
+    `prod_fullname` VARCHAR(255) DEFAULT NULL,
+    `prod_d365_code` VARCHAR(50) DEFAULT NULL,
+    `production_date` DATETIME DEFAULT NULL,
+    `start_time` DATETIME DEFAULT NULL,
+    `end_time` DATETIME DEFAULT NULL,
+    `qty_counted` INT,
+    `qty_weighed` DECIMAL(18, 2),
+    `gap` DECIMAL(18, 2),
+    `shift_data_id` INT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `device`;
+CREATE TABLE `device` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `device_name` VARCHAR(50) DEFAULT NULL,
+    `ip_address` VARCHAR(50) DEFAULT NULL,
+    `port` VARCHAR(50) DEFAULT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_code` VARCHAR(50) DEFAULT NULL,
+    `user_name` VARCHAR(50) DEFAULT NULL,
+    `password` VARCHAR(512) NOT NULL,
+    `user_avatar` VARCHAR(250) DEFAULT NULL,
+    `user_group` INT DEFAULT NULL,
+    `email_address` VARCHAR(50) DEFAULT NULL,
+    `tel_no` VARCHAR(50) DEFAULT NULL,
+    `mobile_no` VARCHAR(50) DEFAULT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `user_group`;
+CREATE TABLE `user_group` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `group_description` VARCHAR(128) DEFAULT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `variable`;
+CREATE TABLE `variable` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `device_id` INT NOT NULL,
+    `type` INT NOT NULL,
+    `area` INT NOT NULL,
+    `bit_address` INT NOT NULL,
+    `byte_address` INT NOT NULL,
+    `name` NVARCHAR(255) NOT NULL,
+    `module` VARCHAR(50) DEFAULT NULL,
+    `unit` VARCHAR(50) DEFAULT NULL,
+    `message` NVARCHAR(255) DEFAULT NULL,
+    `value` NVARCHAR(255) DEFAULT NULL,
+    `purpose` VARCHAR(50) DEFAULT NULL,
+    `created_date` DATETIME DEFAULT NULL,
+    `created_by` VARCHAR(50) DEFAULT NULL,
+    `updated_date` DATETIME DEFAULT NULL,
+    `updated_by` VARCHAR(50) DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS `tmp_printreport`;
+CREATE TABLE `tmp_printreport` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `session_code` VARCHAR(50)
+);
