@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const productsFromApi = async () => {
-    const API_URL = 'http://127.0.0.1:8000/api/products/';
+    const API_URL = 'http://localhost/api/products/';
     const token = localStorage.getItem('accessToken'); // Retrieve the token from localStorage
 
     if (!token) {

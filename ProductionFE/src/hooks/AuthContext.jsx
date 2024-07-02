@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
 
         if (decodedToken.user_id) {
           try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/users/${decodedToken.user_id}/`, {
+            const response = await axios.get(`http://localhost/api/users/${decodedToken.user_id}/`, {
               headers: {
                 Authorization: `Bearer ${access}`
               }
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
   const login = useCallback(async (credentials) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', credentials);
+      const response = await axios.post('http://localhost/api/token/', credentials);
       const { access, refresh } = response.data;
 
       localStorage.setItem('accessToken', access);
@@ -98,7 +98,7 @@ const AuthProvider = ({ children }) => {
 
   const fetchAllUsers = useCallback(async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/users/', {
+      const response = await axios.get('http://localhost/api/users/', {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -113,7 +113,7 @@ const AuthProvider = ({ children }) => {
 
   const refreshAccessToken = useCallback(async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/refresh/', {
+      const response = await axios.post('http://localhost/api/token/refresh/', {
         refresh: refreshToken
       });
       const { access } = response.data;

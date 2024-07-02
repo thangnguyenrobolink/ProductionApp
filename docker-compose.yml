@@ -17,15 +17,15 @@ services:
     volumes:
       - ./ProductionManageBE:/code
     # stop public port => can not public access
-    # ports: 
-    #   - "8000:8000"
+    ports: 
+      - "8000:8000"
     depends_on:
       - db
     environment:
       DATABASE_URL: mysql://root:Thuong221096@db:3306/production
 
   angular:
-      build: ./ProductionUI
+      build: ./ProductionFE
       ports:
         - "4200:80"
       depends_on:

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { jwtDecode  } from 'jwt-decode';
 
 const LoginApi = async (email, hashpassword) => {
-    const url = 'http://127.0.0.1:8000/api/token/';
+    const url = 'http://localhost/api/token/';
     const data = {
         username: email,
         password: hashpassword,
@@ -45,7 +45,7 @@ export { LoginApi };
 
 // Function to fetch user info using access token
 const fetchUserInfo = async (accessToken, userId) => {
-    const url = `http://127.0.0.1:8000/api/users/${userId}/`;
+    const url = `http://localhost/api/users/${userId}/`;
 
     try {
         const response = await axios.get(url, {
@@ -68,7 +68,7 @@ const fetchUserInfo = async (accessToken, userId) => {
 export { fetchUserInfo };
 // Function to fetch users from API
 const usersFromApi = async () => {
-    const API_URL = 'http://127.0.0.1:8000/api/users/';
+    const API_URL = 'http://localhost/api/users/';
     const token = localStorage.getItem('accessToken'); // Retrieve the token from localStorage
 
     if (!token) {
