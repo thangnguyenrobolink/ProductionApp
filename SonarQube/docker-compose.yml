@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  sonarqube-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: sonarqubedb
+      MYSQL_ROOT_PASSWORD: Thuong221096
+    volumes:
+      - sonarqube-db-data:/var/lib/mysql
+
+  sonarqube:
+    image: sonarqube:latest
+    ports:
+      - "9000:9000"
+    environment:
+      SONARQUBE_JDBC_USERNAME: sonarqube
+      SONARQUBE_JDBC_PASSWORD: Thuong221096
+      SONARQUBE_JDBC_URL: jdbc:mysql://root:Thuong221096@db:3306/sonarqubedb
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-extensions:/opt/sonarqube/extensions
+    depends_on:
+      - sonarqube-db
+
+volumes:
+  sonarqube-db-data:
+  sonarqube-data:
+  sonarqube-extensions:

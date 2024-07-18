@@ -3,7 +3,7 @@ services:
   db:
     image: mysql:8.0
     volumes:
-      - mysql_data:/var/lib/mysql
+      - producton-data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: production
       MYSQL_ROOT_PASSWORD: Thuong221096
@@ -17,8 +17,8 @@ services:
     volumes:
       - ./ProductionManageBE:/code
     # stop public port => can not public access
-    ports: 
-      - "8000:8000"
+    # ports: 
+    #   - "8000:8000"
     depends_on:
       - db
     environment:
@@ -26,8 +26,9 @@ services:
 
   angular:
       build: ./ProductionFE
-      ports:
-        - "4200:80"
+      # stop public port => can not public access
+      # ports:
+      #   - "4200:80"
       depends_on:
         - web
 
@@ -42,4 +43,4 @@ services:
       - angular
 
 volumes:
-  mysql_data:
+  producton-data:
